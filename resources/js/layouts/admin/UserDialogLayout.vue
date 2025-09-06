@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ProductController from '@/actions/App/Http/Controllers/ProductController';
+import UserController from '@/actions/App/Http/Controllers/UserController';
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import { Button } from '@/components/ui/button';
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -25,7 +26,7 @@ const editMode = props.variant === 'edit';
             </DialogTitle>
         </DialogHeader>
 
-        <Form id="dialog_form" v-bind="editMode ? ProductController.update.form() : ProductController.create.form()">
+        <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.create.form()">
             <div class="grid grid-cols-2 gap-4">
                 <div class="relative rounded-md border">
                     <PlaceholderPattern />

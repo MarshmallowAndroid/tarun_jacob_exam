@@ -26,7 +26,7 @@ const editMode = props.variant === 'edit';
             </DialogTitle>
         </DialogHeader>
 
-        <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.create.form()">
+        <Form id="dialog_form" v-bind="editMode ? ProductController.update.form() : ProductController.create.form()">
             <div class="grid grid-cols-2 gap-4">
                 <div class="relative rounded-md border">
                     <PlaceholderPattern />
@@ -41,9 +41,9 @@ const editMode = props.variant === 'edit';
                     <NumberField name="price" :format-options="{
                         style: 'currency',
                         currency: 'PHP',
-                        minimumFractionDigits: 2,
-                        roundingMode: 'ceil'
+                        minimumFractionDigits: 2
                     }"
+                    :step=".01"
                     :default-value="product?.price">
                         <NumberFieldContent>
                             <NumberFieldDecrement />
