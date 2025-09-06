@@ -1,0 +1,80 @@
+<script setup lang="ts">
+import ProductController from '@/actions/App/Http/Controllers/ProductController';
+import UserController from '@/actions/App/Http/Controllers/UserController';
+import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import { Button } from '@/components/ui/button';
+import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput } from '@/components/ui/number-field';
+import { Product } from '@/types';
+import { Form } from '@inertiajs/vue3';
+
+const props = defineProps<{
+    variant?: 'add' | 'edit',
+    product?: Product,
+}>();
+
+const editMode = props.variant === 'edit';
+
+</script>
+<template>
+    <DialogContent>
+        <DialogHeader>
+            <DialogTitle>
+                {{ editMode ? 'Edit' : 'Add' }} product
+            </DialogTitle>
+        </DialogHeader>
+
+        <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.create.form()">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="relative rounded-md border">
+                    <PlaceholderPattern />
+                </div>
+                <div class="grid gap-2">
+                    <Input type="hidden" name="id" :default-value="product?.id" />
+
+                    <Label for="name">Product name</Label>
+                    <Input type="text" name="name" :default-value="product?.name" />
+
+                    <Label for="price">Price</Label>
+                    <NumberField name="price" :format-options="{
+                        style: 'currency',
+                        currency: 'PHP',
+                        minimumFractionDigits: 2,
+                        roundingMode: 'ceil'
+                    }"
+                    :default-value="product?.price">
+                        <NumberFieldContent>
+                            <NumberFieldDecrement />
+                            <NumberFieldInput />
+                            <NumberFieldIncrement />
+                        </NumberFieldContent>
+                    </NumberField>
+                    <!-- <Input type="number" step=".01" name="price" class="font-mono" :default-value="product?.price" /> -->
+
+                    <Label for="stocks">Stocks</Label>
+                    <NumberField name="stocks" :format-options="{
+                        style: 'decimal',
+                    }"
+                    :default-value="product?.stocks">
+                        <NumberFieldContent>
+                            <NumberFieldDecrement />
+                            <NumberFieldInput />
+                            <NumberFieldIncrement />
+                        </NumberFieldContent>
+                    </NumberField>
+                </div>
+            </div>
+        </Form>
+
+        <DialogFooter>
+            <DialogClose as-child>
+                <Button class="w-20" type="submit" form="dialog_form">Save</Button>
+            </DialogClose>
+            <DialogClose as-child>
+                <Button class="w-20" variant="outline">Cancel</Button>
+            </DialogClose>
+        </DialogFooter>
+    </DialogContent>
+</template>
