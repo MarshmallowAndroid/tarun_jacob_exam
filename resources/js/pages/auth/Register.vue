@@ -21,22 +21,22 @@ import { LoaderCircle } from 'lucide-vue-next';
             v-slot="{ errors, processing }"
             class="flex flex-col gap-6"
         >
-            <div class="grid gap-6">
+            <div class="grid gap-6 grid-cols-2">
                 <div class="grid gap-2">
                     <Label for="name">Name</Label>
-                    <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name" name="name" placeholder="Full name" />
+                    <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name" name="name"  />
                     <InputError :message="errors.name" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
-                    <Input id="email" type="email" required :tabindex="2" autocomplete="email" name="email" placeholder="email@example.com" />
+                    <Input id="email" type="email" required :tabindex="2" autocomplete="email" name="email"  />
                     <InputError :message="errors.email" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
-                    <Input id="password" type="password" required :tabindex="3" autocomplete="new-password" name="password" placeholder="Password" />
+                    <Input id="password" type="password" required :tabindex="3" autocomplete="new-password" name="password"  />
                     <InputError :message="errors.password" />
                 </div>
 
@@ -49,12 +49,14 @@ import { LoaderCircle } from 'lucide-vue-next';
                         :tabindex="4"
                         autocomplete="new-password"
                         name="password_confirmation"
-                        placeholder="Confirm password"
                     />
                     <InputError :message="errors.password_confirmation" />
                 </div>
 
-                <Button type="submit" class="mt-2 w-full" tabindex="5" :disabled="processing">
+            </div>
+
+            <div class="text-center">
+                <Button type="submit" class="mt-2 w-md" tabindex="5" :disabled="processing">
                     <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
                     Create account
                 </Button>

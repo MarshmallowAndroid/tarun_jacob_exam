@@ -11,6 +11,7 @@ import { register } from '@/routes';
 import { request } from '@/routes/password';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+import { Mail } from 'lucide-vue-next'
 
 defineProps<{
     status?: string;
@@ -19,7 +20,7 @@ defineProps<{
 </script>
 
 <template>
-    <AuthBase title="Log in to your account" description="Enter your email and password below to log in">
+    <AuthBase>
         <Head title="Log in" />
 
         <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
@@ -43,7 +44,6 @@ defineProps<{
                         autofocus
                         :tabindex="1"
                         autocomplete="email"
-                        placeholder="email@example.com"
                     />
                     <InputError :message="errors.email" />
                 </div>
@@ -60,7 +60,6 @@ defineProps<{
                         required
                         :tabindex="2"
                         autocomplete="current-password"
-                        placeholder="Password"
                     />
                     <InputError :message="errors.password" />
                 </div>
@@ -72,10 +71,12 @@ defineProps<{
                     </Label>
                 </div>
 
-                <Button type="submit" class="mt-4 w-full" :tabindex="4" :disabled="processing">
-                    <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
-                    Log in
-                </Button>
+                <div class="text-center">
+                    <Button type="submit" class="mt-4 w-md" :tabindex="4" :disabled="processing">
+                        <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
+                        Log in
+                    </Button>
+                </div>
             </div>
 
             <div class="text-center text-sm text-muted-foreground">
