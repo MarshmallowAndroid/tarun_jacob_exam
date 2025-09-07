@@ -2,7 +2,7 @@
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { home } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
@@ -13,7 +13,7 @@ import admin from '@/routes/admin';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Product Management',
+        title: 'Product management',
         href: admin.products(),
         icon: Archive,
     },
@@ -23,11 +23,14 @@ const mainNavItems: NavItem[] = [
         icon: Inbox,
     },
     {
-        title: 'User Management',
+        title: 'User management',
         href: admin.users(),
         icon: Users,
     }
 ];
+
+const open = useSidebar().open;
+
 </script>
 
 <template>
@@ -37,7 +40,7 @@ const mainNavItems: NavItem[] = [
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <Link href="/">
-                            <AppLogo />
+                            <AppLogo :variant="open ? 'wording' : 'icon'" />
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
