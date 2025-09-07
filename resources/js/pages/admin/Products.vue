@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Form, Head, Link, router } from '@inertiajs/vue3';
+import { Form, Head, Link, router, usePage } from '@inertiajs/vue3';
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import admin from '@/routes/admin';
 import {
@@ -21,11 +21,11 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import ProductDialogLayout from '@/layouts/admin/ProductDialogLayout.vue'
 import { ref } from 'vue';
 
-defineProps(['products']);
+defineProps(['products', 'locale']);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Product Management',
+        title: 'Product management',
         href: admin.products().url,
     },
 ];
@@ -34,7 +34,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 <template>
 
-    <Head title="Product Management" />
+    <Head title="Product management" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="m-4 p-4 rounded-lg border">
@@ -52,13 +52,13 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <TableHead class="text-center">
                         Product Name
                     </TableHead>
-                    <TableHead class="font-mono w-48">
+                    <TableHead class="text-right font-mono w-48">
                         Price
                     </TableHead>
-                    <TableHead class="font-mono w-48">
+                    <TableHead class="text-right font-mono w-48">
                         Stock
                     </TableHead>
-                    <TableHead class="text-right w-10">
+                    <TableHead class="text-right w-36">
                         Actions
                     </TableHead>
                 </TableHeader>
@@ -67,11 +67,14 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <TableCell>
                             {{ product.name }}
                         </TableCell>
-                        <TableCell class="font-mono">
-                            PHP {{ product.price }}
+                        <TableCell class="text-right font-mono">
+                            {{ Intl.NumberFormat(locale, {
+                                style: 'currency',
+                                currency: 'PHP'
+                            }).format(product.price) }}
                         </TableCell>
-                        <TableCell class="font-mono">
-                            {{ product.stocks }}
+                        <TableCell class="text-right font-mono">
+                            {{ Intl.NumberFormat().format(product.stocks) }}
                         </TableCell>
                         <TableCell class="text-right">
                             <div class="items-center">
