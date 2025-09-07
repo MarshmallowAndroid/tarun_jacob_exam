@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ProductController from '@/actions/App/Http/Controllers/ProductController';
 import UserController from '@/actions/App/Http/Controllers/UserController';
+import InputError from '@/components/InputError.vue';
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import { Button } from '@/components/ui/button';
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -19,39 +20,54 @@ const editMode = props.variant === 'edit';
 
 </script>
 <template>
-    <DialogContent>
+    <DialogContent class="sm:max-w-3xl">
         <DialogHeader>
             <DialogTitle>
-                {{ editMode ? 'Edit' : 'Add' }} product
+                {{ editMode ? 'Edit' : 'Add' }} user
             </DialogTitle>
         </DialogHeader>
 
-        <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.create.form()">
-            <div class="grid grid-cols-2 gap-4">
-                <div class="relative rounded-md border">
-                    <PlaceholderPattern />
+        <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.create.form()"
+            #default="{ errors }">
+            <Input type="hidden" name="id" :default-value="user?.id" />
+
+            <div class="grid gap-8">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <Label for="name">Full name</Label>
+                        <Input type="text" name="name" :default-value="user?.name" />
+                        <InputError :message="errors.name" />
+                    </div>
+    
+                    <div class="flex flex-col gap-2">
+                        <Label for="email">Email</Label>
+                        <Input type="text" name="email" :default-value="user?.email" />
+                        <InputError :message="errors.email" />
+                    </div>
                 </div>
-                <div class="grid gap-2">
-                    <Input type="hidden" name="id" :default-value="user?.id" />
 
-                    <Label for="name">Full name</Label>
-                    <Input type="text" name="name" :default-value="user?.name" />
-
-                    <Label for="email">Email</Label>
-                    <Input type="text" name="email" :default-value="user?.email" />
-
-                    <Label for="name">Password</Label>
-                    <Input type="password" name="name" />
-
-                    <Label for="name">Confirm password</Label>
-                    <Input type="password" name="name" />
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <Label for="password">Password</Label>
+                        <Input type="password" name="password" />
+                        <InputError :message="errors.password" />
+                    </div>
+    
+                    <div class="flex flex-col gap-2">
+                        <Label for="password_confirmation">Confirm password</Label>
+                        <Input type="password" name="password_confirmation" />
+                        <InputError :message="errors.password_confirmation" />
+                    </div>
                 </div>
+
             </div>
+
+            <div class="h-24" />
         </Form>
 
         <DialogFooter>
+            <Button class="w-20" type="submit" form="dialog_form">Save</Button>
             <DialogClose as-child>
-                <Button class="w-20" type="submit" form="dialog_form">Save</Button>
             </DialogClose>
             <DialogClose as-child>
                 <Button class="w-20" variant="outline">Cancel</Button>
