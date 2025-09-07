@@ -26,7 +26,7 @@ defineProps(['users']);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'User Management',
+        title: 'User management',
         href: admin.products().url,
     },
 ];
@@ -35,7 +35,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 <template>
 
-    <Head title="Product Management" />
+    <Head title="Product management" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="m-4 p-4 rounded-lg border">
