@@ -9,15 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-function checkAdmin(Request $request): bool
+if (!function_exists('check_admin'))
 {
-    $user = $request->user();
-    return $user !== null && $user->can('do-admin');
+    function check_admin(Request $request): bool
+    {
+        $user = $request->user();
+        return $user !== null && $user->can('do-admin');
+    }
 }
 
 Route::get('/', function (Request $request) {
 
-    if (checkAdmin($request)) {
+    if (check_admin($request)) {
         return redirect('admin/products');
     } else {
         return Inertia::render('Home', [
