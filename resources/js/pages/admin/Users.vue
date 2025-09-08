@@ -37,7 +37,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <DialogTrigger class="float-right mb-4">
                     <Button>
                         <Plus />
-                        Add product
+                        Add user
                     </Button>
                 </DialogTrigger>
                 <UserDialogLayout />
