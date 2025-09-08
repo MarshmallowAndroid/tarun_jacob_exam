@@ -30,6 +30,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+const addOpen = ref(false);
+
 </script>
 
 <template>
@@ -38,14 +40,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="m-4 p-4 rounded-lg border">
-            <Dialog>
+            <Dialog v-model:open="addOpen">
                 <DialogTrigger class="float-right mb-4">
                     <Button>
                         <Plus />
                         Add product
                     </Button>
                 </DialogTrigger>
-                <ProductDialogLayout />
+                <ProductDialogLayout @success="() => addOpen = false" />
             </Dialog>
             <Table>
                 <TableHeader>
@@ -78,6 +80,10 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </TableCell>
                         <TableCell class="text-right">
                             <div class="items-center">
+                                <!--
+                                    DON'T USE OPEN REACTIVE STATE HERE,
+                                    IT WILL APPLY TO ALL DIALOGS!
+                                -->
                                 <Dialog>
                                     <DialogTrigger>
                                         <Button size="icon" variant="ghost" class="mr-2">
