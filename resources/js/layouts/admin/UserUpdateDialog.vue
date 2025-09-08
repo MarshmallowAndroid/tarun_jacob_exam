@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput } from '@/components/ui/number-field';
 import { Product, User } from '@/types';
 import { Form } from '@inertiajs/vue3';
+import { VisuallyHidden } from 'reka-ui';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -31,6 +32,9 @@ const open = ref(false);
                 <DialogTitle>
                     {{ editMode ? 'Edit' : 'Add' }} user
                 </DialogTitle>
+                <VisuallyHidden>
+                    <DialogDescription>{{ user?.name }}</DialogDescription>
+                </VisuallyHidden>
             </DialogHeader>
     
             <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.store.form()"

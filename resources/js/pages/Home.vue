@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/pagination"
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Image } from 'lucide-vue-next';
-import ProductDialogLayout from '@/layouts/ProductDialogLayout.vue';
+import ProductDialog from '@/layouts/ProductDialog.vue';
 import { ref } from 'vue';
 import axios from 'axios';
 import AppLogoWording from '@/components/AppLogoWording.vue';
@@ -58,7 +58,7 @@ paginate('/api/products');
                                 </div>
                             </div>
                         </DialogTrigger>
-                        <ProductDialogLayout :product="product" />
+                        <ProductDialog :product="product" />
                     </Dialog>
                 </template>
             </div>

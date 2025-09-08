@@ -12,6 +12,7 @@ import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncre
 import { Product } from '@/types';
 import { Form } from '@inertiajs/vue3';
 import { Image } from 'lucide-vue-next';
+import { VisuallyHidden } from 'reka-ui';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -20,12 +21,14 @@ const props = defineProps<{
 }>();
 
 const quantity = ref(1);
-
-
-
 </script>
 <template>
     <DialogContent class="sm:max-w-3xl">
+        <VisuallyHidden>
+            <DialogTitle>View product</DialogTitle>
+            <DialogDescription>{{ product.name }}</DialogDescription>
+        </VisuallyHidden>
+
         <Form id="dialog_form" v-bind="CartController.store.form()" #default="{ errors }">
             <Input type="hidden" name="product_id" :default-value="product?.id" />
 

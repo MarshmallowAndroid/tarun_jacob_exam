@@ -10,6 +10,7 @@ import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncre
 import { Product } from '@/types';
 import { Form } from '@inertiajs/vue3';
 import { Image } from 'lucide-vue-next';
+import { VisuallyHidden } from 'reka-ui';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -33,6 +34,9 @@ const open = ref(false);
                 <DialogTitle>
                     {{ editMode ? 'Edit' : 'Add' }} product
                 </DialogTitle>
+                <VisuallyHidden>
+                    <DialogDescription>{{ product?.name }}</DialogDescription>
+                </VisuallyHidden>
             </DialogHeader>
 
             <Form id="dialog_form" v-bind="editMode ? ProductController.update.form() : ProductController.store.form()"

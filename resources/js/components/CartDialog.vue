@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Form, Link, usePage } from '@inertiajs/vue3';
 import { Image, ShoppingCart, Trash2 } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogClose, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import axios from 'axios';
 import cart from '@/routes/cart';
 import { Input } from './ui/input';
 import CartController from '@/actions/App/Http/Controllers/CartController';
 import CartItem from './CartItem.vue';
+import { checkout } from '@/routes';
+import { VisuallyHidden } from 'reka-ui';
 
 defineProps(['cartList', 'total']);
 const emit = defineEmits(['reloadRequested']);
@@ -23,6 +25,11 @@ const locale = page.props.locale;
             <slot />
         </DialogTrigger>
         <DialogContent class="max-h-[90dvh]">
+            <VisuallyHidden>
+                <DialogTitle>Cart</DialogTitle>
+                <DialogDescription>View the items in your cart</DialogDescription>
+            </VisuallyHidden>
+
             <DialogHeader>
                 <div class="mt-8">
                     <div class="flex items-center gap-4 float-left">
@@ -30,7 +37,9 @@ const locale = page.props.locale;
                         <span class="font-bold text-2xl">Cart</span>
                     </div>
                     <Button class="relative float-right">
+                        <Link :href="checkout()">
                         Place order
+                        </Link>
                     </Button>
                 </div>
             </DialogHeader>

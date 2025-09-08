@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/table'
 import { Pencil, Plus, Trash2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
-import ProductDialogLayout from '@/layouts/admin/ProductUpdateDialog.vue'
+import ProductUpdateDialog from '@/layouts/admin/ProductUpdateDialog.vue'
 
 defineProps(['products', 'locale']);
 
@@ -33,12 +33,12 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="m-4 p-4 rounded-lg border">
             <div  class="float-right mb-4">
-                <ProductDialogLayout>
+                <ProductUpdateDialog>
                     <Button>
                         <Plus />
                         Add product
                     </Button>
-                </ProductDialogLayout>
+                </ProductUpdateDialog>
             </div>
             <Table>
                 <TableHeader>
@@ -71,11 +71,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </TableCell>
                         <TableCell class="text-right">
                             <div class="items-center">
-                                <ProductDialogLayout :product="product" variant="edit">
+                                <ProductUpdateDialog :product="product" variant="edit">
                                     <Button size="icon" variant="ghost" class="mr-2">
                                         <Pencil />
                                     </Button>
-                                </ProductDialogLayout>
+                                </ProductUpdateDialog>
                                 <Button size="icon" variant="ghost" as-child>
                                     <Link href="" method="delete" :data="{ id: product.id }" preserve-scroll>
                                     <Trash2 class="text-destructive" />
