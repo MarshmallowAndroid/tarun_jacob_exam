@@ -59,7 +59,9 @@ const totalPrice = computed(() => {
     return t;
 });
 
-updateCart();
+if (auth.value.user) {
+    updateCart();
+}
 </script>
 
 <template>
