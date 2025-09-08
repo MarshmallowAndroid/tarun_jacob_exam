@@ -13,12 +13,12 @@ import { Image } from 'lucide-vue-next';
 import ProductDialogLayout from '@/layouts/ProductDialogLayout.vue';
 import { ref } from 'vue';
 import axios from 'axios';
+import AppLogoWording from '@/components/AppLogoWording.vue';
 
 const props = defineProps(['products', 'locale']);
 const products = ref();
 
-function paginate(url: string)
-{
+function paginate(url: string) {
     axios.get(url).then(response => response.data).then(r => products.value = r);
 }
 
@@ -33,7 +33,7 @@ paginate('/api/products');
     </Head>
     <AppLayoutHome>
         <div>
-            
+
         </div>
         <div class="flex h-full flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="grid gap-4 md:grid-cols-4">
@@ -42,8 +42,8 @@ paginate('/api/products');
                         <DialogTrigger>
                             <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border
                                             hover:bg-accent/50">
-                                <div class="flex bg-accent aspect-square ">
-                                    <Image class="size-24 text-primary justify-center" />
+                                <div class="flex bg-accent aspect-square items-center justify-center ">
+                                    <Image class="size-24 text-primary opacity-25" />
                                 </div>
                                 <div class="grid grid-rows-2 gap-1 m-4 text-left">
                                     <div class="font-bold">
@@ -66,7 +66,8 @@ paginate('/api/products');
 
         <template v-if="products">
             <!-- What a pain to figure out... -->
-            <Pagination v-model:page="products.current_page" :items-per-page="products.per_page" :total="products.total">
+            <Pagination v-model:page="products.current_page" :items-per-page="products.per_page"
+                :total="products.total">
                 <PaginationContent>
                     <PaginationPrevious @click="paginate(products.prev_page_url)" />
 
@@ -77,12 +78,18 @@ paginate('/api/products');
                             {{ products.links[n].page }}
                         </PaginationItem>
                     </template>
-    
+
                     <PaginationNext @click="paginate(products.next_page_url)" />
                 </PaginationContent>
             </Pagination>
         </template>
 
-        <div class="h-8" />
+        <!-- Footer -->
+        <div class="flex flex-col items-center justify-center h-24 mt-24">
+            <AppLogoWording class="h-8 object-center" />
+            <span class="text-muted-foreground mt-2">
+                Copyright &copy; 2025 PurpleBug Inc.
+            </span>
+        </div>
     </AppLayoutHome>
 </template>
