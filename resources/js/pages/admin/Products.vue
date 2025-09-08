@@ -1,25 +1,19 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Form, Head, Link, router, usePage } from '@inertiajs/vue3';
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import { Head, Link } from '@inertiajs/vue3';
 import admin from '@/routes/admin';
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { Pencil, Plus, Trash, Trash2 } from 'lucide-vue-next';
+import { Pencil, Plus, Trash2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
-import ProductController from '@/actions/App/Http/Controllers/ProductController';
-import Input from '@/components/ui/input/Input.vue';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import ProductDialogLayout from '@/layouts/admin/ProductUpdateDialog.vue'
-import { ref } from 'vue';
 
 defineProps(['products', 'locale']);
 
@@ -77,10 +71,6 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </TableCell>
                         <TableCell class="text-right">
                             <div class="items-center">
-                                <!--
-                                    DON'T USE OPEN REACTIVE STATE HERE,
-                                    IT WILL APPLY TO ALL DIALOGS!
-                                -->
                                 <ProductDialogLayout :product="product" variant="edit">
                                     <Button size="icon" variant="ghost" class="mr-2">
                                         <Pencil />
@@ -97,22 +87,5 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </TableBody>
             </Table>
         </div>
-
-        <!-- <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-            </div>
-            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <PlaceholderPattern />
-            </div>
-        </div> -->
     </AppLayout>
 </template>

@@ -47,7 +47,7 @@ function updateCart() {
     axios.get('/api/cart').then(response => response.data).then(r => cartList.value = r);
 }
 
-const total = computed(() => {
+const totalPrice = computed(() => {
     let t = 0;
     if (cartList.value) {
         cartList.value.forEach((product: any) => {
@@ -58,6 +58,8 @@ const total = computed(() => {
     }
     return t;
 });
+
+updateCart();
 </script>
 
 <template>
@@ -70,8 +72,9 @@ const total = computed(() => {
 
                 <div class="ml-auto flex items-center space-x-2">
                     <div v-if="auth.user" class="relative flex items-center space-x-1">
-                        <CartDialog :cart-list="cartList" :total="total" @reload-requested="updateCart()">
-                            <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer" @click="updateCart()">
+                        <CartDialog :cart-list="cartList" :total="totalPrice" @reload-requested="updateCart()">
+                            <Button variant="ghost" class="group size-9 p-2 cursor-pointer"
+                                @click="updateCart()">
                                 <ShoppingCart class="size-5 opacity-80 group-hover:opacity-100" />
                             </Button>
                         </CartDialog>
