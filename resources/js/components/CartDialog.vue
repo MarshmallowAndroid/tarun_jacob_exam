@@ -1,0 +1,56 @@
+<script setup lang="ts">
+import { Button } from '@/components/ui/button';
+import { Form, Link, usePage } from '@inertiajs/vue3';
+import { Image, ShoppingCart, Trash2 } from 'lucide-vue-next';
+import { computed, ref } from 'vue';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import axios from 'axios';
+import cart from '@/routes/cart';
+import { Input } from './ui/input';
+import CartController from '@/actions/App/Http/Controllers/CartController';
+import CartItem from './CartItem.vue';
+
+defineProps(['cartList', 'total']);
+const emit = defineEmits(['reloadRequested']);
+
+const page = usePage();
+const locale = page.props.locale;
+</script>
+
+<template>
+    <Dialog>
+        <DialogTrigger>
+            <slot />
+        </DialogTrigger>
+        <DialogContent class="max-h-[90dvh]">
+            <DialogHeader>
+                <div class="mt-8">
+                    <div class="flex items-center gap-4 float-left">
+                        <ShoppingCart class="size-8" />
+                        <span class="font-bold text-2xl">Cart</span>
+                    </div>
+                    <Button class="relative float-right">
+                        Place order
+                    </Button>
+                </div>
+            </DialogHeader>
+
+            <div class="grid gap-4 overflow-y-auto">
+                <template v-for="product in cartList">
+                    <CartItem :product="product" @success="emit('reloadRequested')" />
+                </template>
+            </div>
+            <DialogFooter>
+                <div class="flex gap-4 p-4 bg-primary text-background rounded-xl w-full">
+                    <div>Total</div>
+                    <div class="font-bold text-3xl">
+                        {{ Intl.NumberFormat(locale, {
+                            style: 'currency',
+                            currency: 'PHP'
+                        }).format(total) }}
+                    </div>
+                </div>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
+</template>

@@ -49,4 +49,15 @@ class CartController extends Controller
 
         return back();
     }
+
+    function delete(Request $request)
+    {
+        $user = $request->user();
+        $validated = $request->validate([
+            'id' => 'required|integer'
+        ]);
+        $user->cart()->detach($validated['id']);
+
+        return back();
+    }
 }
