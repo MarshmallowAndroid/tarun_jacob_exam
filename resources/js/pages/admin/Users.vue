@@ -14,7 +14,7 @@ import {
 import { Pencil, Plus, Trash2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import UserDialogLayout from '@/layouts/admin/UserDialogLayout.vue';
+import UserUpdateDialog from '@/layouts/admin/UserUpdateDialog.vue';
 
 defineProps(['users']);
 
@@ -24,7 +24,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: admin.products().url,
     },
 ];
-
 </script>
 
 <template>
@@ -33,15 +32,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="m-4 p-4 rounded-lg border">
-            <Dialog>
-                <DialogTrigger class="float-right mb-4">
+            <div class="float-right mb-4">
+                <UserUpdateDialog variant="add">
                     <Button>
                         <Plus />
                         Add user
                     </Button>
-                </DialogTrigger>
-                <UserDialogLayout />
-            </Dialog>
+                </UserUpdateDialog>
+            </div>
             <Table>
                 <TableHeader>
                     <TableHead class="text-center">
@@ -65,14 +63,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <TableCell class="text-right">
                             <template v-if="usePage().props.auth.user.id !== user.id">
                                 <div class="items-center">
-                                    <Dialog>
-                                        <DialogTrigger>
-                                            <Button size="icon" variant="ghost" class="mr-2">
-                                                <Pencil />
-                                            </Button>
-                                        </DialogTrigger>
-                                        <UserDialogLayout variant="edit" :user="user" />
-                                    </Dialog>
+                                    <UserUpdateDialog variant="edit" :user="user">
+                                        <Button size="icon" variant="ghost" class="mr-2">
+                                            <Pencil />
+                                        </Button>
+                                    </UserUpdateDialog>
                                     <Button size="icon" variant="ghost" as-child>
                                         <Link href="" method="delete" :data="{ id: user.id }" preserve-scroll>
                                         <Trash2 class="text-destructive" />

@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import ProductController from '@/actions/App/Http/Controllers/ProductController';
 import Input from '@/components/ui/input/Input.vue';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import ProductDialogLayout from '@/layouts/admin/ProductDialogLayout.vue'
+import ProductDialogLayout from '@/layouts/admin/ProductUpdateDialog.vue'
 import { ref } from 'vue';
 
 defineProps(['products', 'locale']);
@@ -30,8 +30,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const addOpen = ref(false);
-
 </script>
 
 <template>
@@ -40,15 +38,14 @@ const addOpen = ref(false);
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="m-4 p-4 rounded-lg border">
-            <Dialog v-model:open="addOpen">
-                <DialogTrigger class="float-right mb-4">
+            <div  class="float-right mb-4">
+                <ProductDialogLayout>
                     <Button>
                         <Plus />
                         Add product
                     </Button>
-                </DialogTrigger>
-                <ProductDialogLayout @success="() => addOpen = false" />
-            </Dialog>
+                </ProductDialogLayout>
+            </div>
             <Table>
                 <TableHeader>
                     <TableHead class="text-center">
@@ -84,17 +81,14 @@ const addOpen = ref(false);
                                     DON'T USE OPEN REACTIVE STATE HERE,
                                     IT WILL APPLY TO ALL DIALOGS!
                                 -->
-                                <Dialog>
-                                    <DialogTrigger>
-                                        <Button size="icon" variant="ghost" class="mr-2">
-                                            <Pencil />
-                                        </Button>
-                                    </DialogTrigger>
-                                    <ProductDialogLayout :product="product" variant="edit" />
-                                </Dialog>
+                                <ProductDialogLayout :product="product" variant="edit">
+                                    <Button size="icon" variant="ghost" class="mr-2">
+                                        <Pencil />
+                                    </Button>
+                                </ProductDialogLayout>
                                 <Button size="icon" variant="ghost" as-child>
-                                    <Link href="" method="delete" :data="{ id: product.id}" preserve-scroll>
-                                        <Trash2 class="text-destructive" />
+                                    <Link href="" method="delete" :data="{ id: product.id }" preserve-scroll>
+                                    <Trash2 class="text-destructive" />
                                     </Link>
                                 </Button>
                             </div>
