@@ -1,25 +1,19 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Form, Head, Link, router } from '@inertiajs/vue3';
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import admin from '@/routes/admin';
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { Pencil, Plus, Trash, Trash2 } from 'lucide-vue-next';
+import { Pencil, Plus, Trash2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
-import ProductController from '@/actions/App/Http/Controllers/ProductController';
-import Input from '@/components/ui/input/Input.vue';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import ProductDialogLayout from '@/layouts/admin/ProductDialogLayout.vue'
-import { ref } from 'vue';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import UserDialogLayout from '@/layouts/admin/UserDialogLayout.vue';
 
 defineProps(['users']);
@@ -69,21 +63,23 @@ const breadcrumbs: BreadcrumbItem[] = [
                             {{ user.email }}
                         </TableCell>
                         <TableCell class="text-right">
-                            <div class="items-center">
-                                <Dialog>
-                                    <DialogTrigger>
-                                        <Button size="icon" variant="ghost" class="mr-2">
-                                            <Pencil />
-                                        </Button>
-                                    </DialogTrigger>
-                                    <UserDialogLayout variant="edit" :user="user" />
-                                </Dialog>
-                                <Button size="icon" variant="ghost" as-child>
-                                    <Link href="" method="delete" :data="{ id: user.id}" preserve-scroll>
+                            <template v-if="usePage().props.auth.user.id !== user.id">
+                                <div class="items-center">
+                                    <Dialog>
+                                        <DialogTrigger>
+                                            <Button size="icon" variant="ghost" class="mr-2">
+                                                <Pencil />
+                                            </Button>
+                                        </DialogTrigger>
+                                        <UserDialogLayout variant="edit" :user="user" />
+                                    </Dialog>
+                                    <Button size="icon" variant="ghost" as-child>
+                                        <Link href="" method="delete" :data="{ id: user.id }" preserve-scroll>
                                         <Trash2 class="text-destructive" />
-                                    </Link>
-                                </Button>
-                            </div>
+                                        </Link>
+                                    </Button>
+                                </div>
+                            </template>
                         </TableCell>
                     </TableRow>
                 </TableBody>
