@@ -27,7 +27,7 @@ const editMode = props.variant === 'edit';
             </DialogTitle>
         </DialogHeader>
 
-        <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.create.form()"
+        <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.store.form()"
             #default="{ errors }">
             <Input type="hidden" name="id" :default-value="user?.id" />
 
