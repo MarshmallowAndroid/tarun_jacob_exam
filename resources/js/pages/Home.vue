@@ -1,26 +1,18 @@
 <script setup lang="ts">
-import AppShell from '@/components/AppShell.vue';
-import AppSidebar from '@/components/AppSidebar.vue';
-import AppContent from '@/components/AppContent.vue';
-import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
-import { login, register } from '@/routes';
-import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { BreadcrumbItem, Product } from '@/types';
+import { Head, Link } from '@inertiajs/vue3';
 import AppLayoutHome from '@/layouts/AppLayoutHome.vue';
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
-import ProductController from '@/actions/App/Http/Controllers/ProductController';
-import { onMounted, ref } from 'vue';
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { Image } from 'lucide-vue-next';
+import ProductDialogLayout from '@/layouts/ProductDialogLayout.vue';
 
-const props = defineProps(['products']);
+const props = defineProps(['products', 'locale']);
 const products = props.products;
 </script>
 
@@ -31,46 +23,59 @@ const products = props.products;
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
     <AppLayoutHome>
-        <Dialog>
-            <DialogTrigger>
-                <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                    <div class="grid auto-rows-min gap-4 md:grid-cols-4">
-                        <div v-for="product in products.data"
-                            class="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                            <div class="bg-purple-900 aspect-square">
-        
+        <div>
+
+        </div>
+        <div class="flex h-full flex-col gap-4 overflow-x-auto rounded-xl p-4">
+            <div class="grid gap-4 md:grid-cols-4">
+                <template v-for="product in products.data">
+                    <Dialog>
+                        <DialogTrigger>
+                            <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border
+                                            hover:bg-accent/50">
+                                <div class="flex bg-accent aspect-square ">
+                                    <Image class="size-24 text-primary justify-center" />
+                                </div>
+                                <div class="grid grid-rows-2 gap-1 m-4 text-left">
+                                    <div class="font-bold">
+                                        {{ product.name }}
+                                    </div>
+                                    <div class="text-muted-foreground">
+                                        {{ Intl.NumberFormat(locale, {
+                                            style: 'currency',
+                                            currency: 'PHP'
+                                        }).format(product.price) }}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="pt-4 pl-4 font-bold">
-                                {{ product.name }}
-                            </div>
-                            <div class="pb-4 pl-4 text-muted-foreground">
-                                PHP {{ product.price }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </DialogTrigger>
-        </Dialog>
+                        </DialogTrigger>
+                        <ProductDialogLayout :product="product" />
+                    </Dialog>
+                </template>
+            </div>
+        </div>
 
         <!-- What a pain to figure out... -->
         <Pagination v-model:page="products.current_page" :items-per-page="products.per_page" :total="products.total">
             <PaginationContent>
                 <PaginationPrevious v-if="products.prev_page_url === null" />
                 <Link v-else :href="products.prev_page_url" class="cursor-default" preserve-scroll>
-                    <PaginationPrevious />
+                <PaginationPrevious />
                 </Link>
 
                 <template v-for="n in (products.last_page)">
                     <Link :href="products.links[n].url" preserve-scroll>
-                        <PaginationItem :value="products.links[n].page" :is-active="products.current_page === products.links[n].page">
-                            {{ products.links[n].page }}
-                        </PaginationItem>
+                    <PaginationItem :value="products.links[n].page"
+                        :is-active="products.current_page === products.links[n].page">
+                        {{ products.links[n].page }}
+                    </PaginationItem>
                     </Link>
                 </template>
 
                 <PaginationNext v-if="products.next_page_url === null" />
-                <Link v-else="products.next_page_url !== null" :href="products.next_page_url" class="cursor-default" preserve-scroll>
-                    <PaginationNext />
+                <Link v-else="products.next_page_url" :href="products.next_page_url" class="cursor-default"
+                    preserve-scroll>
+                <PaginationNext />
                 </Link>
             </PaginationContent>
         </Pagination>
