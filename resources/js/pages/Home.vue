@@ -11,9 +11,18 @@ import {
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Image } from 'lucide-vue-next';
 import ProductDialogLayout from '@/layouts/ProductDialogLayout.vue';
+import { ref } from 'vue';
+import axios from 'axios';
 
 const props = defineProps(['products', 'locale']);
-const products = props.products;
+const products = ref();
+
+function paginate(url: string)
+{
+    axios.get(url).then(response => response.data).then(r => products.value = r);
+}
+
+paginate('/api/products');
 </script>
 
 <template>
@@ -24,11 +33,11 @@ const products = props.products;
     </Head>
     <AppLayoutHome>
         <div>
-
+            
         </div>
         <div class="flex h-full flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="grid gap-4 md:grid-cols-4">
-                <template v-for="product in products.data">
+                <template v-if="products" v-for="product in products.data">
                     <Dialog>
                         <DialogTrigger>
                             <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border
@@ -55,30 +64,24 @@ const products = props.products;
             </div>
         </div>
 
-        <!-- What a pain to figure out... -->
-        <Pagination v-model:page="products.current_page" :items-per-page="products.per_page" :total="products.total">
-            <PaginationContent>
-                <PaginationPrevious v-if="products.prev_page_url === null" />
-                <Link v-else :href="products.prev_page_url" class="cursor-default" preserve-scroll>
-                <PaginationPrevious />
-                </Link>
+        <template v-if="products">
+            <!-- What a pain to figure out... -->
+            <Pagination v-model:page="products.current_page" :items-per-page="products.per_page" :total="products.total">
+                <PaginationContent>
+                    <PaginationPrevious @click="paginate(products.prev_page_url)" />
 
-                <template v-for="n in (products.last_page)">
-                    <Link :href="products.links[n].url" preserve-scroll>
-                    <PaginationItem :value="products.links[n].page"
-                        :is-active="products.current_page === products.links[n].page">
-                        {{ products.links[n].page }}
-                    </PaginationItem>
-                    </Link>
-                </template>
-
-                <PaginationNext v-if="products.next_page_url === null" />
-                <Link v-else="products.next_page_url" :href="products.next_page_url" class="cursor-default"
-                    preserve-scroll>
-                <PaginationNext />
-                </Link>
-            </PaginationContent>
-        </Pagination>
+                    <template v-for="n in (products.last_page)">
+                        <PaginationItem :value="products.links[n].page"
+                            :is-active="products.current_page === products.links[n].page"
+                            @click="paginate(products.links[n].url)">
+                            {{ products.links[n].page }}
+                        </PaginationItem>
+                    </template>
+    
+                    <PaginationNext @click="paginate(products.next_page_url)" />
+                </PaginationContent>
+            </Pagination>
+        </template>
 
         <div class="h-8" />
     </AppLayoutHome>

@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserController;
-use App\Http\Middleware\HandleGuest;
+
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,11 +18,9 @@ if (!function_exists('check_admin'))
 Route::get('/', function (Request $request) {
 
     if (check_admin($request)) {
-        return redirect('admin/products');
+        return redirect(route('admin.products'));
     } else {
-        return Inertia::render('Home', [
-            'products' => Product::paginate(perPage: 12)
-        ]);
+        return Inertia::render('Home');
     }
 })->name('home');
 
