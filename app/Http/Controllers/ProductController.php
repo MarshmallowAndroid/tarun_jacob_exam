@@ -8,12 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
-    function get()
-    {
-        return Product::all();
-    }
-
-    function create(Request $request)
+    function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string',

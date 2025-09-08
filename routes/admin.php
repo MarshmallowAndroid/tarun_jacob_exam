@@ -20,7 +20,7 @@ Route::middleware(['auth', HandleGuest::class])->group(function () {
             return Inertia::render('admin/Products', ['products' => Product::orderBy('created_at', 'desc')->get()]);
         })->name('products');
         Route::post('products', [ProductController::class, 'store']
-        )->name('products.create');
+        )->name('products.store');
         Route::patch('products', [ProductController::class, 'update']
         )->name('products.update');
         Route::delete('products', [ProductController::class, 'delete']
@@ -34,7 +34,7 @@ Route::middleware(['auth', HandleGuest::class])->group(function () {
             return Inertia::render('admin/Users', ['users' => User::orderBy('created_at', 'desc')->get()]);
         })->name('users');
         Route::post('users', [UserController::class, 'store']
-        )->name('users.create');
+        )->name('users.store');
         Route::patch('users', [UserController::class, 'update']
         )->name('users.update');
         Route::delete('users', [UserController::class, 'delete']

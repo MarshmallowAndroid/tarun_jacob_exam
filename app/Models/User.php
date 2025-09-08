@@ -46,4 +46,12 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function cart()
+    {
+        return $this->belongsToMany(Product::class)
+            ->withPivot('quantity')
+            ->withTimestamps()
+            ->as('cart_item');
+    }
 }

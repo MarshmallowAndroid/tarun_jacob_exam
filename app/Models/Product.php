@@ -14,4 +14,10 @@ class Product extends Model
         'price',
         'stocks'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->withTimestamps();
+    }
 }

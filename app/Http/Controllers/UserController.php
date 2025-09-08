@@ -11,7 +11,7 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    function create(Request $request)
+    function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
