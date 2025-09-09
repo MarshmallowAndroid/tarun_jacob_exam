@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\DeliveryStatus;
 use App\Models\CartItem;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -13,7 +16,7 @@ class CartController extends Controller
     function get_cart_item(User $user, Product $product)
     {
         return $user->cart()
-            ->withPivotValue('product_id', $product->getAttributeValue('id'))
+            ->withPivotValue('product_id', $product->id)
             ->first();
     }
 
@@ -37,7 +40,11 @@ class CartController extends Controller
         // add the product if it doesn't exist in the cart
         // quantity is 0 since we're gonna add it later
         if (!$cartItem) {
-            $user->cart()->attach($product, ['quantity' => 0]);
+            $user->cart()->attach($product, [
+                'quantity' => 0,
+                'checked_out' => false,
+                'status' => DeliveryStatus::Pending,
+            ]);
             $cartItem = $this->get_cart_item($user, $product);
         }
 
@@ -54,10 +61,19 @@ class CartController extends Controller
     {
         $user = $request->user();
         $validated = $request->validate([
-            'id' => 'required|integer'
+            'id' => 'required|integer',
         ]);
         $user->cart()->detach($validated['id']);
 
         return back();
+    }
+
+    function checkout(Request $request)
+    {
+        $user = $request->user();
+
+        foreach ($user->cart as $product) {
+            $user->cart()->updateExistingPivot($product, ['checked_out' => true]);
+        }
     }
 }

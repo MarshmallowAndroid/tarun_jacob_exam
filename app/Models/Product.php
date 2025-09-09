@@ -18,6 +18,8 @@ class Product extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)
-            ->withTimestamps();
+            ->withPivot('quantity')
+            ->withTimestamps()
+            ->as('cart_item');
     }
 }

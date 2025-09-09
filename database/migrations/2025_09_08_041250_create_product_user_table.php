@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->index();
             $table->foreignIdFor(User::class)->index();
             $table->integer('quantity');
+            $table->boolean('checked_out');
+            $table->integer('status');
             $table->timestamps();
         });
     }
