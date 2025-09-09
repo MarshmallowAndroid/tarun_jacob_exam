@@ -72,7 +72,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <TableCell class="text-right">
                             <div class="items-center">
                                 <ProductUpdateDialog :product="product" variant="edit">
-                                    <Button size="icon" variant="ghost" class="mr-2">
+                                    <Button size="icon" variant="ghost">
                                         <Pencil />
                                     </Button>
                                 </ProductUpdateDialog>

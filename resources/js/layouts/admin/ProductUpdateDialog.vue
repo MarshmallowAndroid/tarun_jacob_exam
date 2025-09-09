@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput } from '@/components/ui/number-field';
 import { Product } from '@/types';
 import { Form } from '@inertiajs/vue3';
-import { Image } from 'lucide-vue-next';
+import { Image, LoaderCircle, LoaderCircleIcon } from 'lucide-vue-next';
 import { VisuallyHidden } from 'reka-ui';
 import { ref } from 'vue';
 
@@ -22,7 +22,6 @@ const emit = defineEmits(['success']);
 
 const editMode = props.variant === 'edit';
 const open = ref(false);
-
 </script>
 <template>
     <Dialog v-model:open="open">
@@ -38,9 +37,9 @@ const open = ref(false);
                     <DialogDescription>{{ product?.name }}</DialogDescription>
                 </VisuallyHidden>
             </DialogHeader>
-
+            
             <Form id="dialog_form" v-bind="editMode ? ProductController.update.form() : ProductController.store.form()"
-                #default="{ errors }" @success="() => open = false">
+                #default="{ errors, processing }" @success="() => open = false" as-child>
                 <Input type="hidden" name="id" :default-value="product?.id" />
 
                 <div class="grid grid-cols-2 gap-4">
@@ -82,14 +81,17 @@ const open = ref(false);
                         </div>
                     </div>
                 </div>
-            </Form>
 
-            <DialogFooter>
-                <Button class="w-20" type="submit" form="dialog_form">Save</Button>
-                <DialogClose as-child>
-                    <Button class="w-20" variant="outline">Close</Button>
-                </DialogClose>
-            </DialogFooter>
+                <DialogFooter class="mt-4">
+                    <Button :disabled="processing" class="w-20" type="submit" form="dialog_form">
+                        <LoaderCircle v-if="processing" class="w-4 h-4 animate-spin" />
+                        Save
+                    </Button>
+                    <DialogClose as-child>
+                        <Button class="w-20" variant="outline">Close</Button>
+                    </DialogClose>
+                </DialogFooter>
+            </Form>
         </DialogContent>
     </Dialog>
 

@@ -38,28 +38,26 @@ paginate('/api/products');
         <div class="flex h-full flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="grid gap-4 md:grid-cols-4">
                 <template v-if="products" v-for="product in products.data">
-                    <Dialog>
-                        <DialogTrigger>
-                            <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border
+                    <ProductDialog :product="product">
+                        <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border
                                             hover:bg-accent/50">
-                                <div class="flex bg-accent aspect-square items-center justify-center ">
-                                    <Image class="size-24 text-primary opacity-25" />
+                            <div class="flex bg-accent aspect-square items-center justify-center ">
+                                <Image class="size-24 text-primary opacity-25" />
+                            </div>
+                            <div class="grid grid-rows-2 m-4 text-left">
+                                <div class="text-primary">
+                                    {{ product.name }}
                                 </div>
-                                <div class="grid grid-rows-2 gap-1 m-4 text-left">
-                                    <div class="font-bold">
-                                        {{ product.name }}
-                                    </div>
-                                    <div class="text-muted-foreground">
-                                        {{ Intl.NumberFormat(locale, {
-                                            style: 'currency',
-                                            currency: 'PHP'
-                                        }).format(product.price) }}
-                                    </div>
+                                <div class="font-bold text-xl">
+                                    {{ Intl.NumberFormat(locale, {
+                                        style: 'currency',
+                                        currency: 'PHP'
+                                    }).format(product.price) }}
                                 </div>
                             </div>
-                        </DialogTrigger>
-                        <ProductDialog :product="product" />
-                    </Dialog>
+                        </div>
+
+                    </ProductDialog>
                 </template>
             </div>
         </div>

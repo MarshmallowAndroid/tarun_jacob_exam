@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput } from '@/components/ui/number-field';
 import { Product, User } from '@/types';
 import { Form } from '@inertiajs/vue3';
+import { Loader2, LoaderCircle, LoaderCircleIcon, LoaderIcon, LoaderPinwheel } from 'lucide-vue-next';
 import { VisuallyHidden } from 'reka-ui';
 import { ref } from 'vue';
 
@@ -20,7 +21,6 @@ const props = defineProps<{
 
 const editMode = props.variant === 'edit';
 const open = ref(false);
-
 </script>
 <template>
     <Dialog v-model:open="open">
@@ -38,7 +38,7 @@ const open = ref(false);
             </DialogHeader>
     
             <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.store.form()"
-                #default="{ errors }"
+                #default="{ errors, processing }"
                 @success="() => open = false">
                 <Input type="hidden" name="id" :default-value="user?.id" />
     
@@ -74,16 +74,18 @@ const open = ref(false);
                 </div>
     
                 <div class="h-24" />
+                <DialogFooter>
+                    <Button :disabled="processing" class="w-20" type="submit" form="dialog_form">
+                        <LoaderCircle v-if="processing" class="w-4 h-4 animate-spin" />
+                        Save
+                    </Button>
+                    <DialogClose as-child>
+                    </DialogClose>
+                    <DialogClose as-child>
+                        <Button class="w-20" variant="outline">Cancel</Button>
+                    </DialogClose>
+                </DialogFooter>
             </Form>
-    
-            <DialogFooter>
-                <Button class="w-20" type="submit" form="dialog_form">Save</Button>
-                <DialogClose as-child>
-                </DialogClose>
-                <DialogClose as-child>
-                    <Button class="w-20" variant="outline">Cancel</Button>
-                </DialogClose>
-            </DialogFooter>
         </DialogContent>
     </Dialog>
 </template>
