@@ -36,7 +36,7 @@ const locale = page.props.locale;
                         <ShoppingCart class="size-8" />
                         <span class="font-bold text-2xl">Cart</span>
                     </div>
-                    <Button class="relative float-right">
+                    <Button :disabled="!cartList[0]" class="relative float-right">
                         <Link :href="checkout()">
                         Place order
                         </Link>
