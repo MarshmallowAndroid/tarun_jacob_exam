@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/table'
 import { Pencil, Plus, Trash2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
-import ProductUpdateDialog from '@/layouts/admin/ProductUpdateDialog.vue'
+import ProductUpdateDialog from '@/components/ProductUpdateDialog.vue';
 
 defineProps(['products', 'locale']);
 

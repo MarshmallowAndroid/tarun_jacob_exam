@@ -1,9 +1,22 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import { Head, Link } from '@inertiajs/vue3';
 import admin from '@/routes/admin';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table'
+import { Eye, Pencil, Plus, Trash2 } from 'lucide-vue-next';
+import { Button } from '@/components/ui/button';
+import ProductUpdateDialog from '@/components/ProductUpdateDialog.vue';
+import OrderUpdateDialog from '@/components/OrderUpdateDialog.vue';
+
+defineProps(['orders'])
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,24 +27,79 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
+
     <Head title="Orders" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-            </div>
-            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <PlaceholderPattern />
-            </div>
+        <div class="m-4 p-4 rounded-lg border">
+            <Table>
+                <TableHeader>
+                    <TableHead>
+                        Full Name
+                    </TableHead>
+                    <TableHead>
+                        Product Name
+                    </TableHead>
+                    <TableHead class="text-center">
+                        Quantity
+                    </TableHead>
+                    <TableHead class="text-center">
+                        Status
+                    </TableHead>
+                    <TableHead class="text-right w-36">
+                        Actions
+                    </TableHead>
+                </TableHeader>
+                <TableBody>
+                    <TableRow v-for="order in orders" :key="order.id">
+                        <TableCell>
+                            {{ order.user.name }}
+                        </TableCell>
+                        <TableCell>
+                            {{ order.product.name }}
+                        </TableCell>
+                        <TableCell class="text-center font-mono">
+                            {{ Intl.NumberFormat().format(order.quantity) }}
+                        </TableCell>
+                        <TableCell class="text-center">
+                            <div class="flex items-center justify-center">
+                                <div class="w-24">
+                                    <div v-if="order.status === 0"
+                                        class="bg-amber-300 dark:bg-amber-700 rounded-md p-2">
+                                        Pending
+                                    </div>
+                                    <div v-else-if="order.status === 1"
+                                        class="bg-lime-300 dark:bg-lime-700 rounded-md p-2">
+                                        For delivery
+                                    </div>
+                                    <div v-else-if="order.status === 2"
+                                        class="bg-green-300 dark:bg-emerald-700 rounded-md p-2">
+                                        Delivered
+                                    </div>
+                                    <div v-else-if="order.status === 3"
+                                        class="bg-red-300 dark:bg-red-900 rounded-md p-2">
+                                        Cancelled
+                                    </div>
+                                </div>
+                            </div>
+                        </TableCell>
+                        <TableCell class="text-right">
+                            <div class="items-center">
+                                <OrderUpdateDialog :order="order" variant="edit">
+                                    <Button size="icon" variant="ghost">
+                                        <Eye />
+                                    </Button>
+                                </OrderUpdateDialog>
+                                <Button size="icon" variant="ghost" as-child>
+                                    <Link href="" method="delete" :data="{ id: order.id }" preserve-scroll>
+                                    <Trash2 class="text-destructive" />
+                                    </Link>
+                                </Button>
+                            </div>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
         </div>
     </AppLayout>
 </template>

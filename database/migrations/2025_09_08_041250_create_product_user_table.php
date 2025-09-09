@@ -14,6 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_user', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(Product::class)->index();
             $table->foreignIdFor(User::class)->index();
             $table->integer('quantity');

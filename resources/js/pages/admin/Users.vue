@@ -14,7 +14,7 @@ import {
 import { Pencil, Plus, Trash2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import UserUpdateDialog from '@/layouts/admin/UserUpdateDialog.vue';
+import UserUpdateDialog from '@/components/UserUpdateDialog.vue';
 
 defineProps(['users']);
 
@@ -64,7 +64,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <template v-if="usePage().props.auth.user.id !== user.id">
                                 <div class="items-center">
                                     <UserUpdateDialog variant="edit" :user="user">
-                                        <Button size="icon" variant="ghost" class="mr-2">
+                                        <Button size="icon" variant="ghost">
                                             <Pencil />
                                         </Button>
                                     </UserUpdateDialog>
