@@ -31,11 +31,12 @@ const open = ref(false);
         <DialogContent class="sm:max-w-3xl">
             <VisuallyHidden>
                 <DialogTitle>View product</DialogTitle>
-                <DialogDescription>{{ product.name }}</DialogDescription>
+                <DialogDescription>View details for {{ product.name }}</DialogDescription>
             </VisuallyHidden>
 
             <Form id="dialog_form" v-bind="CartController.store.form()" #default="{ errors, processing }"
-                @success="() => open = false">
+                @success="() => open = false"
+                :options="{ preserveScroll: true }">
                 <Input type="hidden" name="product_id" :default-value="product?.id" />
 
                 <div class="grid grid-cols-2 gap-4">

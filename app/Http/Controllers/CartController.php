@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DeliveryStatus;
-use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;

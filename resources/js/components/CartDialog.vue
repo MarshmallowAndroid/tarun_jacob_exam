@@ -39,7 +39,8 @@ const open = ref(false);
                         <span class="font-bold text-2xl">Cart</span>
                     </div>
                     <Form v-bind="CartController.checkout.form()" @success="() => open = false"
-                        #default="{ processing }">
+                        #default="{ processing }"
+                        :options="{ preserveScroll: true }">
                         <Button :disabled="!cartList[0] || processing" type="submit" class="relative float-right">
                             <LoaderCircle v-if="processing" class="w-4 h-4 animate-spin" />
                             Place order

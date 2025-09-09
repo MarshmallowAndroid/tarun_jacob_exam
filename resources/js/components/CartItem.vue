@@ -14,7 +14,8 @@ const locale = page.props.locale;
 
 <template>
     <div class="rounded-xl border p-4">
-        <Form v-bind="CartController.delete.form()" @success="emits('success')">
+        <Form v-bind="CartController.delete.form()" @success="emits('success')"
+        :options="{ preserveScroll: true }">
             <Input type="hidden" name="id" :model-value="product.id" />
             <div class="flex gap-4 float-left">
                 <div class="flex bg-accent size-32 aspect-square rounded-md items-center justify-center ">

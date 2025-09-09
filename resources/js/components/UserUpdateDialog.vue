@@ -33,15 +33,15 @@ const open = ref(false);
                     {{ editMode ? 'Edit' : 'Add' }} user
                 </DialogTitle>
                 <VisuallyHidden>
-                    <DialogDescription>{{ user?.name }}</DialogDescription>
+                    <DialogDescription>{{ editMode ? 'Edit details for ' + user?.name : 'Add user' }}
+                    </DialogDescription>
                 </VisuallyHidden>
             </DialogHeader>
-    
+
             <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.store.form()"
-                #default="{ errors, processing }"
-                @success="() => open = false">
+                #default="{ errors, processing }" @success="() => open = false" :options="{ preserveScroll: true }">
                 <Input type="hidden" name="id" :default-value="user?.id" />
-    
+
                 <div class="grid gap-8">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="flex flex-col gap-2">
@@ -49,30 +49,30 @@ const open = ref(false);
                             <Input type="text" name="name" :default-value="user?.name" />
                             <InputError :message="errors.name" />
                         </div>
-    
+
                         <div class="flex flex-col gap-2">
                             <Label for="email">Email</Label>
                             <Input type="text" name="email" :default-value="user?.email" />
                             <InputError :message="errors.email" />
                         </div>
                     </div>
-    
+
                     <div class="grid grid-cols-2 gap-4">
                         <div class="flex flex-col gap-2">
                             <Label for="password">Password</Label>
                             <Input type="password" name="password" />
                             <InputError :message="errors.password" />
                         </div>
-    
+
                         <div class="flex flex-col gap-2">
                             <Label for="password_confirmation">Confirm password</Label>
                             <Input type="password" name="password_confirmation" />
                             <InputError :message="errors.password_confirmation" />
                         </div>
                     </div>
-    
+
                 </div>
-    
+
                 <div class="h-24" />
                 <DialogFooter>
                     <Button :disabled="processing" class="w-20" type="submit" form="dialog_form">

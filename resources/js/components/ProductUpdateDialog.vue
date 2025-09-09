@@ -34,12 +34,13 @@ const open = ref(false);
                     {{ editMode ? 'Edit' : 'Add' }} product
                 </DialogTitle>
                 <VisuallyHidden>
-                    <DialogDescription>{{ product?.name }}</DialogDescription>
+                    <DialogDescription>{{ editMode ? 'Edit details for ' + product?.name : 'Add product' }}</DialogDescription>
                 </VisuallyHidden>
             </DialogHeader>
             
             <Form id="dialog_form" v-bind="editMode ? ProductController.update.form() : ProductController.store.form()"
-                #default="{ errors, processing }" @success="() => open = false" as-child>
+                #default="{ errors, processing }" @success="() => open = false"
+                :options="{ preserveScroll: true }">
                 <Input type="hidden" name="id" :default-value="product?.id" />
 
                 <div class="grid grid-cols-2 gap-4">
