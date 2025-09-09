@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
 import { Form, Link, usePage } from '@inertiajs/vue3';
-import { Image, ShoppingCart, Trash2 } from 'lucide-vue-next';
+import { Image, LoaderCircle, ShoppingCart, Trash2 } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogClose, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import axios from 'axios';
@@ -17,10 +17,12 @@ const emit = defineEmits(['reloadRequested']);
 
 const page = usePage();
 const locale = page.props.locale;
+
+const open = ref(false);
 </script>
 
 <template>
-    <Dialog>
+    <Dialog v-model:open="open">
         <DialogTrigger>
             <slot />
         </DialogTrigger>
@@ -36,11 +38,13 @@ const locale = page.props.locale;
                         <ShoppingCart class="size-8" />
                         <span class="font-bold text-2xl">Cart</span>
                     </div>
-                    <Button :disabled="!cartList[0]" class="relative float-right">
-                        <Link :href="checkout()">
-                        Place order
-                        </Link>
-                    </Button>
+                    <Form v-bind="CartController.checkout.form()" @success="() => open = false"
+                        #default="{ processing }">
+                        <Button :disabled="!cartList[0] || processing" type="submit" class="relative float-right">
+                            <LoaderCircle v-if="processing" class="w-4 h-4 animate-spin" />
+                            Place order
+                        </Button>
+                    </Form>
                 </div>
             </DialogHeader>
 
