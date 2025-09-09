@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/pagination"
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Image } from 'lucide-vue-next';
-import ProductDialog from '@/layouts/ProductDialog.vue';
+import ProductDialog from '@/components/ProductDialog.vue';
 import { ref } from 'vue';
 import axios from 'axios';
 import AppLogoWording from '@/components/AppLogoWording.vue';
