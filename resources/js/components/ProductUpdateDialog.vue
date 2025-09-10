@@ -45,7 +45,7 @@ const open = ref(false);
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="flex bg-accent aspect-square rounded-md items-center justify-center ">
-                        <Image class="size-24 text-primary opacity-25" />
+                        <Image class="size-24 text-primary opacity-50" />
                     </div>
                     <div>
                         <div class="grid gap-2">

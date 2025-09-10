@@ -69,7 +69,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                         Pending
                                     </div>
                                     <div v-else-if="order.status === 1"
-                                        class="bg-lime-300 dark:bg-lime-700 rounded-md p-2">
+                                        class="bg-lime-300 dark:bg-lime-600 rounded-md p-2">
                                         For delivery
                                     </div>
                                     <div v-else-if="order.status === 2"
