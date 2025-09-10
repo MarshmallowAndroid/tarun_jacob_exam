@@ -14,8 +14,7 @@ const locale = page.props.locale;
 
 <template>
     <div class="rounded-xl border p-4">
-        <Form v-bind="CartController.delete.form()" @success="emits('success')"
-        :options="{ preserveScroll: true }">
+        <Form v-bind="CartController.delete.form()" @success="emits('success')" :options="{ preserveScroll: true }">
             <Input type="hidden" name="id" :model-value="product.id" />
             <div class="flex gap-4 float-left">
                 <div class="flex bg-accent size-32 aspect-square rounded-md items-center justify-center ">
@@ -30,8 +29,7 @@ const locale = page.props.locale;
                             {{ Intl.NumberFormat(locale, {
                                 style: 'currency',
                                 currency: 'PHP'
-                            }).format(product.price) }} x {{ product.cart_item.quantity
-                            }}
+                            }).format(product.price) }} x {{ Intl.NumberFormat().format(product.cart_item.quantity) }}
                         </div>
                         <div class="font-bold text-2xl">
                             {{ Intl.NumberFormat(locale, {
