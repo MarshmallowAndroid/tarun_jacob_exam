@@ -3,23 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\DeliveryStatus;
-use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
-    function get_cart_item(User $user, Product $product)
+    public function get_cart_item(User $user, Product $product)
     {
         return $user->cart()
             ->withPivotValue('product_id', $product->id)
             ->first();
     }
 
-    function store(Request $request)
+    public function store(Request $request)
     {
         $user = $request->user();
 
@@ -38,7 +35,7 @@ class CartController extends Controller
 
         // add the product if it doesn't exist in the cart
         // quantity is 0 since we're gonna add it later
-        if (!$cartItem) {
+        if (! $cartItem) {
             $user->cart()->attach($product, [
                 'quantity' => 0,
                 'checked_out' => false,
@@ -56,7 +53,7 @@ class CartController extends Controller
         return back();
     }
 
-    function delete(Request $request)
+    public function delete(Request $request)
     {
         $user = $request->user();
         $validated = $request->validate([
@@ -67,7 +64,7 @@ class CartController extends Controller
         return back();
     }
 
-    function checkout(Request $request)
+    public function checkout(Request $request)
     {
         $user = $request->user();
 

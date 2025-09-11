@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Log\Logger;
 use Symfony\Component\HttpFoundation\Response;
 
 class HandleGuest
@@ -17,9 +16,10 @@ class HandleGuest
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if ($user !== null && $user->can('do-admin'))
+        if ($user !== null && $user->can('do-admin')) {
             return $next($request);
-        else
+        } else {
             return redirect('/');
+        }
     }
 }

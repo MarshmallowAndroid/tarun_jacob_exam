@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
-    function store(Request $request)
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string',
@@ -25,10 +24,10 @@ class ProductController extends Controller
         return back();
     }
 
-    function delete(Request $request)
+    public function delete(Request $request)
     {
         $validated = $request->validate([
-            'id' => 'required|integer'
+            'id' => 'required|integer',
         ]);
 
         Product::find($validated['id'])->delete();
@@ -36,7 +35,7 @@ class ProductController extends Controller
         return back();
     }
 
-    function update(Request $request)
+    public function update(Request $request)
     {
         $validated = $request->validate([
             'id' => 'required|integer',

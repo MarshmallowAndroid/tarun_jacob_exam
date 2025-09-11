@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Settings\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +10,7 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -28,10 +27,10 @@ class UserController extends Controller
         return back();
     }
 
-    function delete(Request $request)
+    public function delete(Request $request)
     {
         $validated = $request->validate([
-            'id' => 'required|integer'
+            'id' => 'required|integer',
         ]);
 
         User::find($validated['id'])->delete();
@@ -39,7 +38,7 @@ class UserController extends Controller
         return back();
     }
 
-    function update(Request $request)
+    public function update(Request $request)
     {
         $validated = $request->validate([
             'id' => 'required|integer',
@@ -51,7 +50,7 @@ class UserController extends Controller
 
         $attribs = [
             'name' => $validated['name'],
-            'email' => $validated['email']
+            'email' => $validated['email'],
         ];
 
         if ($validated['password']) {

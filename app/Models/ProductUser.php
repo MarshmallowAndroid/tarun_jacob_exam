@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\DeliveryStatus;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class ProductUser extends Pivot
@@ -12,7 +11,7 @@ class ProductUser extends Pivot
         'user_id',
         'product_id',
         'quantity',
-        'status'
+        'status',
     ];
 
     protected function casts()

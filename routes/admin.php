@@ -1,16 +1,13 @@
 <?php
 
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\HandleGuest;
-use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductUser;
 use App\Models\User;
 use Inertia\Inertia;
-
 
 Route::middleware(['auth', HandleGuest::class])->group(function () {
 
@@ -39,7 +36,7 @@ Route::middleware(['auth', HandleGuest::class])->group(function () {
         Route::get('orders', function (Request $request) {
             return Inertia::render('admin/Orders', [
                 'orders' => ProductUser::where('checked_out', '=', true)->
-                    orderBy('created_at', 'desc')->with(['user', 'product'])->get()
+                    orderBy('created_at', 'desc')->with(['user', 'product'])->get(),
             ]);
         })->name('orders');
         Route::post('orders', [ProductUserController::class, 'update']);

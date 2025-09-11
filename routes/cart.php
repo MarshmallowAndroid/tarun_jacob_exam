@@ -10,6 +10,6 @@ Route::middleware('auth')->group(function () {
     });
     Route::post('cart', [CartController::class, 'store'])->name('cart.store');
     Route::delete('cart', [CartController::class, 'delete'])->name('cart.delete');
-    
+
     Route::post('checkout', [CartController::class, 'checkout'])->name('checkout');
 });

@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductUser;
 use Illuminate\Http\Request;
-use Log;
 
 class ProductUserController extends Controller
 {
-    function update(Request $request)
+    public function update(Request $request)
     {
         $validated = $request->validate([
             'id' => 'required|integer',
@@ -21,7 +20,7 @@ class ProductUserController extends Controller
         return back();
     }
 
-    function delete(Request $request)
+    public function delete(Request $request)
     {
         $validated = $request->validate([
             'id' => 'required|integer',
