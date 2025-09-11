@@ -11,7 +11,8 @@ import CartController from '@/actions/App/Http/Controllers/CartController';
 import CartItem from './CartItem.vue';
 import { checkout } from '@/routes';
 import { VisuallyHidden } from 'reka-ui';
-
+import ThankYouGraphic from './ThankYouGraphic.vue';
+import AppLogoWording from './AppLogoWording.vue';
 defineProps(['cartList', 'total']);
 const emit = defineEmits(['reloadRequested']);
 
@@ -19,6 +20,7 @@ const page = usePage();
 const locale = page.props.locale;
 
 const open = ref(false);
+const checkedOut = ref(false);
 </script>
 
 <template>
@@ -38,9 +40,8 @@ const open = ref(false);
                         <ShoppingCart class="size-8" />
                         <span class="font-bold text-2xl">Cart</span>
                     </div>
-                    <Form v-bind="CartController.checkout.form()" @success="() => open = false"
-                        #default="{ processing }"
-                        :options="{ preserveScroll: true }">
+                    <Form v-bind="CartController.checkout.form()" @success="() => { open = false; checkedOut = true; }"
+                        #default="{ processing }" :options="{ preserveScroll: true }">
                         <Button :disabled="!cartList[0] || processing" type="submit" class="relative float-right">
                             <LoaderCircle v-if="processing" class="w-4 h-4 animate-spin" />
                             Place order
@@ -54,6 +55,7 @@ const open = ref(false);
                     <CartItem :product="product" @success="emit('reloadRequested')" />
                 </template>
             </div>
+
             <DialogFooter>
                 <div class="flex gap-4 p-4 bg-primary text-background rounded-xl w-full">
                     <div>Total</div>
@@ -65,6 +67,23 @@ const open = ref(false);
                     </div>
                 </div>
             </DialogFooter>
+
+        </DialogContent>
+    </Dialog>
+    <Dialog v-model:open="checkedOut">
+        <DialogContent>
+            <div class="grid gap-8 mt-8">
+                <div class="flex flex-col gap-16 items-center justify-center">
+                    <AppLogoWording class="h-8" />
+                    <ThankYouGraphic class="h-72" />
+                    <span class="text-primary text-2xl">Thank you for shopping with us.</span>
+                </div>
+                <DialogClose as-child>
+                    <Button>
+                        Close
+                    </Button>
+                </DialogClose>
+            </div>
         </DialogContent>
     </Dialog>
 </template>
