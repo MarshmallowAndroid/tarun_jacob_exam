@@ -3,7 +3,7 @@ import AppLogoIcon from './AppLogoIcon.vue';
 import AppLogoWording from './AppLogoWording.vue';
 
 defineProps<{
-    variant?: 'icon' | 'wording',
+    variant?: 'icon' | 'wording';
 }>();
 </script>
 

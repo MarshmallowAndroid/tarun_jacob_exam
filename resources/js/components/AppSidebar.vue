@@ -1,15 +1,22 @@
 <script setup lang="ts">
-import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
-import { home } from '@/routes';
+import Separator from '@/components/ui/separator/Separator.vue';
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    useSidebar,
+} from '@/components/ui/sidebar';
+import admin from '@/routes/admin';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { Archive, Inbox, Users } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
-import Separator from '@/components/ui/separator/Separator.vue';
-import admin from '@/routes/admin';
 
 const mainNavItems: NavItem[] = [
     {
@@ -26,11 +33,10 @@ const mainNavItems: NavItem[] = [
         title: 'User management',
         href: admin.users(),
         icon: Users,
-    }
+    },
 ];
 
 const open = useSidebar().open;
-
 </script>
 
 <template>

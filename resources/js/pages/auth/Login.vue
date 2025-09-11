@@ -11,7 +11,6 @@ import { register } from '@/routes';
 import { request } from '@/routes/password';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
-import { Mail } from 'lucide-vue-next'
 
 defineProps<{
     status?: string;
@@ -36,15 +35,7 @@ defineProps<{
             <div class="grid gap-6">
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        name="email"
-                        required
-                        autofocus
-                        :tabindex="1"
-                        autocomplete="email"
-                    />
+                    <Input id="email" type="email" name="email" required autofocus :tabindex="1" autocomplete="email" />
                     <InputError :message="errors.email" />
                 </div>
 
@@ -53,14 +44,7 @@ defineProps<{
                         <Label for="password">Password</Label>
                         <TextLink v-if="canResetPassword" :href="request()" class="text-sm" :tabindex="5"> Forgot password? </TextLink>
                     </div>
-                    <Input
-                        id="password"
-                        type="password"
-                        name="password"
-                        required
-                        :tabindex="2"
-                        autocomplete="current-password"
-                    />
+                    <Input id="password" type="password" name="password" required :tabindex="2" autocomplete="current-password" />
                     <InputError :message="errors.password" />
                 </div>
 

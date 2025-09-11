@@ -21,22 +21,22 @@ import { LoaderCircle } from 'lucide-vue-next';
             v-slot="{ errors, processing }"
             class="flex flex-col gap-6"
         >
-            <div class="grid gap-6 grid-cols-2">
+            <div class="grid grid-cols-2 gap-6">
                 <div class="grid gap-2">
                     <Label for="name">Name</Label>
-                    <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name" name="name"  />
+                    <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name" name="name" />
                     <InputError :message="errors.name" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
-                    <Input id="email" type="email" required :tabindex="2" autocomplete="email" name="email"  />
+                    <Input id="email" type="email" required :tabindex="2" autocomplete="email" name="email" />
                     <InputError :message="errors.email" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
-                    <Input id="password" type="password" required :tabindex="3" autocomplete="new-password" name="password"  />
+                    <Input id="password" type="password" required :tabindex="3" autocomplete="new-password" name="password" />
                     <InputError :message="errors.password" />
                 </div>
 
@@ -52,7 +52,6 @@ import { LoaderCircle } from 'lucide-vue-next';
                     />
                     <InputError :message="errors.password_confirmation" />
                 </div>
-
             </div>
 
             <div class="text-center">

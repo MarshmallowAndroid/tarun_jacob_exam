@@ -1,22 +1,28 @@
 <script setup lang="ts">
-import ProductController from '@/actions/App/Http/Controllers/ProductController';
 import UserController from '@/actions/App/Http/Controllers/UserController';
 import InputError from '@/components/InputError.vue';
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput } from '@/components/ui/number-field';
-import { Product, User } from '@/types';
+import { User } from '@/types';
 import { Form } from '@inertiajs/vue3';
-import { Loader2, LoaderCircle, LoaderCircleIcon, LoaderIcon, LoaderPinwheel } from 'lucide-vue-next';
+import { LoaderCircle } from 'lucide-vue-next';
 import { VisuallyHidden } from 'reka-ui';
 import { ref } from 'vue';
 
 const props = defineProps<{
-    variant?: 'add' | 'edit',
-    user?: User,
+    variant?: 'add' | 'edit';
+    user?: User;
 }>();
 
 const editMode = props.variant === 'edit';
@@ -29,17 +35,19 @@ const open = ref(false);
         </DialogTrigger>
         <DialogContent class="sm:max-w-3xl">
             <DialogHeader>
-                <DialogTitle>
-                    {{ editMode ? 'Edit' : 'Add' }} user
-                </DialogTitle>
+                <DialogTitle> {{ editMode ? 'Edit' : 'Add' }} user </DialogTitle>
                 <VisuallyHidden>
-                    <DialogDescription>{{ editMode ? 'Edit details for ' + user?.name : 'Add user' }}
-                    </DialogDescription>
+                    <DialogDescription>{{ editMode ? 'Edit details for ' + user?.name : 'Add user' }} </DialogDescription>
                 </VisuallyHidden>
             </DialogHeader>
 
-            <Form id="dialog_form" v-bind="editMode ? UserController.update.form() : UserController.store.form()"
-                #default="{ errors, processing }" @success="() => open = false" :options="{ preserveScroll: true }">
+            <Form
+                id="dialog_form"
+                v-bind="editMode ? UserController.update.form() : UserController.store.form()"
+                #default="{ errors, processing }"
+                @success="() => (open = false)"
+                :options="{ preserveScroll: true }"
+            >
                 <Input type="hidden" name="id" :default-value="user?.id" />
 
                 <div class="grid gap-8">
@@ -70,17 +78,15 @@ const open = ref(false);
                             <InputError :message="errors.password_confirmation" />
                         </div>
                     </div>
-
                 </div>
 
                 <div class="h-24" />
                 <DialogFooter>
                     <Button :disabled="processing" class="w-20" type="submit" form="dialog_form">
-                        <LoaderCircle v-if="processing" class="w-4 h-4 animate-spin" />
+                        <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
                         Save
                     </Button>
-                    <DialogClose as-child>
-                    </DialogClose>
+                    <DialogClose as-child> </DialogClose>
                     <DialogClose as-child>
                         <Button class="w-20" variant="outline">Cancel</Button>
                     </DialogClose>
