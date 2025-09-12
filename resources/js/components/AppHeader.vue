@@ -8,7 +8,7 @@ import UserMenuContent from '@/components/UserMenuContent.vue';
 import { getInitials } from '@/composables/useInitials';
 import { login, register } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ShoppingCart } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
@@ -30,7 +30,13 @@ const cartList = ref();
 function updateCart() {
     axios
         .get('/api/cart')
-        .then((response) => response.data)
+        .then((response) => {
+            if (response.status == 401) {
+                router.visit(login());
+            }
+
+            return response.data
+        })
         .then((r) => (cartList.value = r));
 }
 
