@@ -15,7 +15,7 @@ if (! function_exists('check_admin')) {
 
 Route::get('/', function (Request $request) {
     if (check_admin($request)) {
-        return redirect(route('admin.products'));
+        return to_route('admin.products');
     } else {
         return Inertia::render('Home', [
             'search' => $request->search,
