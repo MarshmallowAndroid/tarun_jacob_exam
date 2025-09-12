@@ -28,9 +28,23 @@ Additional components:
 - Checked out orders can be duplicated
 - Product stocks are not automatically subtracted when checking out
 
----
+## Building and Running
+Build the application with:
+```
+npm run build
+```
+Then serve with:
+```
+php artisan serve
+```
+The application can then be accessed via http://localhost:8000 or http://127.0.0.1:8000
 
-### Answers for Multiple Choice
+Otherwise, for development purposes run:
+```
+composer run dev
+```
+---
+## Answers for Multiple Choice
 1. What command is used to create a new Laravel project?
 ```
 b) composer create-project laravel/laravel project-name
