@@ -26,7 +26,7 @@ function paginate(url: string, searchQuery?: string, sort?: string) {
             },
         })
         .then((response) => response.data)
-        .then((r) => (products.value = r));
+        .then((r) => products.value = r);
 }
 
 function refreshItems(url?: string) {
