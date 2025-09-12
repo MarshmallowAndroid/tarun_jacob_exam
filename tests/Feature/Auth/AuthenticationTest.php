@@ -59,3 +59,30 @@ test('users are rate limited', function () {
 
     $this->assertStringContainsString('Too many login attempts', $errors->first('email'));
 });
+
+test('admin login redirects to home then to dashboard', function () {
+    $user = User::factory()->adminUser()->create();
+
+    $response = $this->post(route('login.store', [
+        'email' => $user->email,
+        'password' => 'password'
+    ]));
+
+    $response->assertRedirect(route('home'));
+
+    $response = $this->get(route('home'))
+        ->assertRedirect(route('admin.products'));
+});
+
+test('guest login redirects to home', function () {
+    $user = User::factory()->create();
+
+    $response = $this->post(route('login.store', [
+        'email' => $user->email,
+        'password' => 'password'
+    ]));
+
+    $response->assertRedirect(route('home'));
+    
+    $response = $this->get(route('home'))->assertStatus(200);
+});
