@@ -79,7 +79,9 @@ And serve:
 ```
 php artisan serve
 ```
+
 The application can then be accessed via http://localhost:8000 or http://127.0.0.1:8000
+
 ---
 ## Answers for Multiple Choice
 1. What command is used to create a new Laravel project?
