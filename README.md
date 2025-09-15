@@ -28,21 +28,58 @@ Additional components:
 - Checked out orders can be duplicated
 - Product stocks are not automatically subtracted when checking out
 
+## Requirements
+- PHP and Composer (see below)
+- [Node.js](https://nodejs.org/en/download)
+
+### Manual installation
+Get [PHP](https://www.php.net/downloads.php) and [Composer](https://getcomposer.org/download/) and add it to your PATH.
+### Automatic installation
+Follow the instructions on [php.new](https://php.new/). This will install PHP, Composer, and Laravel as well as automatically configure your PATH.
+
 ## Building and Running
-Build the application with:
+A blank database file needs to exist. Create one in the `database` folder.
+### Windows Command Prompt
+```batch
+type NUL > database\database.sqlite
+```
+### Windows PowerShell
+```pwsh
+New-Item database\database.sqlite
+```
+### Linux
+```sh
+touch database/database.sqlite
+```
+For Sanctum to work, you need to specify an encryption key. Create a file named `.env` in the project's directory and set the `APP_KEY` variable.
+The key must be `AES-256 CBC`. Use websites such as [this](https://emn178.github.io/online-tools/aes/encrypt/) to generate them.
+
+In the `.env` file:
+```
+APP_KEY=base64:<The encryption key in base 64>
+```
+
+Install the required dependencies:
+```
+composer install
+npm install
+```
+
+Then build the application:
 ```
 npm run build
 ```
-Then serve with:
+
+Create the database tables and seed them:
+```
+php artisan migrate:fresh --seed
+```
+
+And serve:
 ```
 php artisan serve
 ```
 The application can then be accessed via http://localhost:8000 or http://127.0.0.1:8000
-
-Otherwise, for development purposes run:
-```
-composer run dev
-```
 ---
 ## Answers for Multiple Choice
 1. What command is used to create a new Laravel project?
